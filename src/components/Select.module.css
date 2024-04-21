@@ -1,0 +1,74 @@
+:root {
+  --arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
+  --option-bg: white;
+  --select-bg: rgba(255, 255, 255, 0.2);
+  --arrow-bg: rgba(255, 255, 255, 0.3);
+  
+  --red-light-bg: rgba(255, 100, 100, 0.8);
+  --red-bg: rgba(255, 100, 100, 0.7);
+  --red-dim-bg: rgba(255, 100, 100, 0.25);
+
+  --yellow-light-bg: rgba(255, 255, 100, 0.7);
+  --yellow-bg: rgba(255, 255, 100, 0.6);
+  --yellow-dim-bg: rgba(255, 255, 100, 0.3);
+}
+
+.select, .select * {
+  box-sizing: border-box;
+}
+
+/* <select> styles */
+.select {
+  /* Reset */
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  /* Personalize */
+  width: 15rem;
+  padding: .3rem 3rem .3rem 1rem;
+  background: var(--arrow-icon) no-repeat right .35em center/1.4em, linear-gradient(to left, var(--arrow-bg) 2em, var(--select-bg) 2em);
+  color: white;
+  border-radius: 0.25em;
+  box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  border: 1px solid transparent;
+  /* Remove IE arrow */
+  /* Remove focus outline */
+  /* <option> colors */
+}
+.select::-ms-expand {
+  display: none;
+}
+.select:focus {
+  outline: none;
+}
+.select option {
+  color: inherit;
+  background-color: var(--option-bg);
+}
+
+.select.active {
+  box-shadow: 0 0 1em 0 rgba(255, 255, 255, 0.2);
+
+}
+
+.select.Red.active {
+  background: var(--arrow-icon) no-repeat right .35em center/1.4em, linear-gradient(to left, var(--red-light-bg) 2em, var(--red-bg) 2em);
+  border: 1px solid red;
+}
+
+.select.Red {
+  background: var(--arrow-icon) no-repeat right .35em center/1.4em, linear-gradient(to left, rgba(255, 100, 100, 0.4) 2em, var(--red-dim-bg) 2em);
+}
+
+.select.Yellow.active {
+  background: var(--arrow-icon) no-repeat right .35em center/1.4em, linear-gradient(to left, var(--yellow-light-bg) 2em, var(--yellow-bg) 2em);
+  border: 1px solid yellow;
+}
+
+.select.Yellow {
+  background: var(--arrow-icon) no-repeat right .35em center/1.4em, linear-gradient(to left, rgba(255, 255, 100, 0.4) 2em, var(--yellow-dim-bg) 2em);
+}

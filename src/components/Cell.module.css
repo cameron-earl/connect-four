@@ -1,0 +1,319 @@
+:root {
+  --red: red;
+  --dark-red: #a11;
+  --red-warning: 5px -4px 7px 0 var(--red) inset;
+  --yellow: yellow;
+  --dark-yellow: #aa1;
+  --yellow-warning: -5px 4px 7px 0 var(--yellow) inset;
+
+  --unit-length: min(1vh, 1vw);
+  --piece-diameter: calc(var(--unit-length) * 11.8);
+  --piece-thickness: calc(var(--unit-length) * 0.13);
+  --cell-box-shadow: 0px 0px 0px calc(var(--unit-length) * 10) var(--board-color);
+
+  --test-color: lime;
+}
+
+.cellWrapper {
+  border-bottom: solid var(--unit-length) var(--board-color);
+  border-left: solid var(--unit-length) var(--board-color);
+  border-right: solid var(--unit-length) var(--board-color);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 20;
+  /* padding: 8px; */
+  /* outline: solid 8px pink; */
+}
+
+.cellWrapper:nth-last-of-type(1) {
+  border-top: solid var(--unit-length) var(--board-color);
+}
+
+.cell {
+  width: 100%;
+  align-self: center;
+  position: relative;
+  height: auto;
+  padding-top: 100%;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.cell:before{
+  content:'';
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: max(calc(.3 * var(--unit-length)), 3px) solid var(--board-line-color);
+  
+  border-radius:100%;
+  width:100%; 
+  height:100%;
+  box-shadow: var(--cell-box-shadow);
+  box-sizing: border-box;
+  transition: box-shadow 0.5s;
+}
+
+.cell.majorThreat-1::before {
+  box-shadow: var(--cell-box-shadow), var(--red-warning);
+}
+
+.cell.majorThreat-2::before {
+  box-shadow: var(--cell-box-shadow), var(--yellow-warning);
+}
+
+.cell.majorThreat-3::before {
+  box-shadow: var(--cell-box-shadow), var(--red-warning), var(--yellow-warning);
+}
+
+.pieceWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index:1;
+}
+
+.pieceWrapper.winning {
+  z-index: 10;
+}
+
+.piece {
+  border-radius: 50%;
+  z-index: 0;
+  width: var(--piece-diameter);
+  height: var(--piece-diameter);
+  position: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: calc(11 * var(--unit-length));
+  text-shadow: 0 0 16px rgba(0,0,0,0.15), 0 0 5px rgba(0, 0, 0, 0.1);
+  font-weight: bolder;
+  text-indent: calc(-.4 * var(--unit-length));
+}
+
+.piece.Red {
+  background-color: var(--red);
+  color: var(--red);
+  border: solid calc(.1 * var(--unit-length)) var(--red);
+}
+
+.piece.Yellow {
+  background-color: var(--yellow);
+  color: var(--yellow);
+  border: solid calc(.1 * var(--unit-length)) var(--yellow);
+}
+
+.piece > div {
+  margin-top: max(-.3vw, -.3vh);
+}
+
+.pieceWrapper:not(.winning) > .piece.new {
+  animation-name: dropIntoPlace;
+  animation-duration: .5s;
+  animation-timing-function: ease-in;
+  box-shadow: 0 0 var(--unit-length) var(--unit-length) rgb(0, 217, 255) inset;
+  text-shadow: 0 0 16px rgba(0,0,0,0.15), 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.pieceWrapper.winning > .piece {
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+  transform: rotate(0deg);
+}
+
+.pieceWrapper.winning > .piece.Red {
+  animation-name: coin-spin-red;
+}
+
+.pieceWrapper.winning > .piece.Yellow {
+  animation-name: coin-spin-yellow;
+} 
+
+.pieceWrapper.winning > .piece > div {
+  animation-name: number-spin;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+}
+
+@keyframes coin-spin-red {
+  0% {
+    transform: rotate(0deg);
+    width: var(--piece-diameter);
+    animation-timing-function: ease-in;
+  }
+  49.999% {
+    width: 0.1rem;
+    box-shadow:
+      calc(1 * var(--piece-thickness)) 0 0 var(--red),
+      calc(2 * var(--piece-thickness)) 0 0 var(--red),
+      calc(3 * var(--piece-thickness)) 0 0 var(--red),
+      calc(4 * var(--piece-thickness)) 0 0 var(--red),
+      calc(5 * var(--piece-thickness)) 0 0 var(--red),
+      calc(6 * var(--piece-thickness)) 0 0 var(--red),
+      calc(7 * var(--piece-thickness)) 0 0 var(--red),
+      calc(8 * var(--piece-thickness)) 0 0 var(--red),
+      calc(9 * var(--piece-thickness)) 0 0 var(--red),
+      calc(10 * var(--piece-thickness)) 0 0 var(--red),
+      calc(11 * var(--piece-thickness)) 0 0 var(--red),
+      calc(12 * var(--piece-thickness)) 0 0 var(--red),
+      calc(13 * var(--piece-thickness)) 0 0 var(--red),
+      calc(14 * var(--piece-thickness)) 0 0 var(--red),
+      calc(15 * var(--piece-thickness)) 0 0 var(--red);
+    transform: translateX(calc(.44 * var(--piece-diameter)));
+    background-color: var(--dark-red);
+    animation-timing-function: linear;
+  }
+
+  50.001% {
+    width: 0.1rem;
+    box-shadow:
+      calc(-1 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-2 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-3 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-4 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-5 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-6 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-7 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-8 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-9 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-10 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-11 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-12 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-13 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-14 * var(--piece-thickness)) 0 0 var(--red),
+      calc(-15 * var(--piece-thickness)) 0 0 var(--red);
+    transform: translateX(calc(.56 * var(--piece-diameter)));
+    background-color: var(--dark-red);
+    animation-timing-function: ease-out;
+  }
+
+  100% {
+    width: var(--piece-diameter);
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes coin-spin-yellow {
+  0% {
+    transform: rotate(0deg);
+    width: var(--piece-diameter);
+    animation-timing-function: ease-in;
+  }
+  49.999% {
+    width: 0.1rem;
+    box-shadow:
+    calc(1 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(2 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(3 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(4 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(5 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(6 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(7 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(8 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(9 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(10 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(11 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(12 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(13 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(14 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(15 * var(--piece-thickness)) 0 0 var(--yellow);
+    transform: translateX(calc(.44 * var(--piece-diameter)));
+    background-color: var(--dark-yellow);
+    animation-timing-function: linear;
+  }
+
+  50.001% {
+    width: 0.1rem;
+    box-shadow:
+    calc(-1 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-2 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-3 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-4 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-5 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-6 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-7 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-8 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-9 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-10 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-11 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-12 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-13 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-14 * var(--piece-thickness)) 0 0 var(--yellow),
+    calc(-15 * var(--piece-thickness)) 0 0 var(--yellow);
+    transform: translateX(calc(.56 * var(--piece-diameter)));
+    background-color: var(--dark-yellow);
+    animation-timing-function: ease-out;
+  }
+
+  100% {
+    width: var(--piece-diameter);
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes number-spin {
+  0% {
+    transform: scaleX(100%);
+    animation-timing-function: ease-in;
+  }
+  
+  49.999% {
+    transform: scaleX(1%);
+    animation-timing-function: linear;
+  }
+  
+  50.001% {
+    transform: scaleX(1%);
+    animation-timing-function: ease-out;
+  }
+  
+  100% {
+    transform: scaleX(100%);
+  }
+}
+
+@keyframes dropIntoPlace {
+  0% {
+    transform: translateY(-80vh);
+    z-index: 0;
+  }
+  100% {
+    transform: translateY(0);
+    z-index: 0;
+  }
+  100% {
+    z-index: 0;
+  }
+}
+
+/* @keyframes spin{
+  0%{
+    transform: rotateY(0deg);
+  }
+  100%{
+    transform: rotateY(360deg);
+  }
+}
+
+
+.pieceWrapper.winning > .piece {
+  transform-style: preserve-3d;
+	animation: spin 10s linear infinite;
+}
+
+.pieceWrapper.winning > .piece::before {
+  background-color: red;
+  position: absolute;
+  border-radius: 50%;
+  content: '';
+  height: var(--piece-diameter);
+  width: var(--piece-diameter);
+  transform: translate(calc(0.5 * var(--piece-diameter)), 0, calc(-1 * var(--piece-thickness)));
+} */
