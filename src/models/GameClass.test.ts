@@ -1,5 +1,5 @@
-import { getEmptyBoard } from '../utilities/gameFns';
-import GameClass from './Game';
+import { getEmptyBoardArr } from '../utilities/gameFns';
+import GameClass from './GameClass';
 import { _, BoardState, emptyColumn, R, Y } from './gameModels';
 
 describe('constructor', () => {
@@ -21,7 +21,7 @@ describe('constructor', () => {
 
 describe('move', () => {
   it('performs moves correctly', () => {
-    const game = new GameClass(getEmptyBoard(), R);
+    const game = new GameClass(getEmptyBoardArr(), R);
     game.move(0);
     game.move(6);
     game.move(1);
@@ -29,13 +29,13 @@ describe('move', () => {
     game.move(2);
     game.move(5);
 
-    expect(game.board[0][0]).toBe(R);
-    expect(game.board[1][0]).toBe(R);
-    expect(game.board[2][0]).toBe(R);
-    expect(game.board[6][0]).toBe(Y);
-    expect(game.board[5][0]).toBe(Y);
-    expect(game.board[5][1]).toBe(Y);
-    expect(game.board[3][0]).toBe(_);
+    expect(game.board.boardArr[0][0]).toBe(R);
+    expect(game.board.boardArr[1][0]).toBe(R);
+    expect(game.board.boardArr[2][0]).toBe(R);
+    expect(game.board.boardArr[6][0]).toBe(Y);
+    expect(game.board.boardArr[5][0]).toBe(Y);
+    expect(game.board.boardArr[5][1]).toBe(Y);
+    expect(game.board.boardArr[3][0]).toBe(_);
     expect(game.moveCount).toBe(6);
   });
 });
@@ -143,11 +143,8 @@ describe('checkForVictory', () => {
   });
 });
 
-describe('updateMajorThreats', () => {
-  it.todo('updateMajorThreats');
-});
-
 describe('getMajorThreats', () => {
+  // TODO: move to board tests
   it('should return proper response for newly constructed class', () => {
     const board: BoardState = [
       [_, _, _, _, _, _],
@@ -159,7 +156,7 @@ describe('getMajorThreats', () => {
       [_, _, _, _, _, _],
     ];
     const testGame = new GameClass(board);
-    const actual = testGame.majorThreats;
+    const actual = testGame.board.majorThreatMap;
     expect(actual[1][0]).toBe(R);
     expect(actual[0][0]).toBe(_);
   });

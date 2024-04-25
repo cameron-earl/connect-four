@@ -1,11 +1,10 @@
 import React, { MouseEventHandler, useEffect, useState } from 'react';
 
 import { useKeyDown } from '../hooks/useKeyDown';
-import GameClass from '../models/Game';
+import GameClass from '../models/GameClass';
 import { PlayerToken } from '../models/gameModels';
 import { aiPersonas } from '../models/personas';
 import { aiMove } from '../utilities/aiFns';
-import { countOpportunities } from '../utilities/gameFns';
 import Board from './Board';
 import Button from './Button';
 import styles from './Game.module.css';
@@ -24,7 +23,7 @@ const playerOptions = ['human', ...Object.keys(aiPersonas)].map((str) => ({
 const game = new GameClass();
 
 function Game() {
-  const [board, setBoard] = useState(game.board);
+  const [board, setBoard] = useState(game.board.boardArr);
   const [players, setPlayers] = useState(['human', 'medium']);
 
   let gameOver = game.gameOver;
@@ -37,16 +36,23 @@ function Game() {
       game.move(colIndex);
     } catch (e) {
       // move not allowed
-      setBoard(game.board);
+      setBoard(game.board.boardArr);
       console.error('Unclickable column somehow clicked');
     }
 
-    setBoard(game.board);
+    setBoard(game.board.boardArr);
   };
 
   const reset = () => {
     game.reset();
-    setBoard(game.board);
+    setBoard(game.board.boardArr);
+  };
+
+  const undo = () => {
+    const humanPlayerCount = players.reduce((total, el) => total + Number(el === 'human'), 0);
+    if (humanPlayerCount === 2) game.undo(1);
+    else game.undo(2);
+    setTimeout(() => setBoard(game.board.boardArr), 100);
   };
 
   useKeyDown(
@@ -60,7 +66,6 @@ function Game() {
 
   const handlePlayerSelect = (player: 0 | 1) => (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newVal = event.target.value;
-    console.log({ fn: 'handlePlayerSelect', player, newVal });
     const newPlayers = [...players];
     newPlayers[player] = newVal;
     setPlayers(newPlayers);
@@ -69,11 +74,11 @@ function Game() {
   useEffect(() => {
     if (!!gameOver) return;
     if (isHumanPlayer) {
-      console.log({ opportunities: countOpportunities(game.board) });
+      console.info({ opportunities: game.board.opportunityCountMap });
     } else {
       setTimeout(() => {
         game.move(aiMove(aiPersonas[currentPlayer], game));
-        setBoard(game.board);
+        setBoard(game.board.boardArr);
       }, 500);
     }
   }, [isHumanPlayer, currentPlayer, gameOver, board]);
@@ -101,6 +106,9 @@ function Game() {
           onChange={handlePlayerSelect(1)}
         ></Select>
         <Button onClick={reset}>Reset</Button>
+        <Button disabled={!game.moveCount} onClick={undo}>
+          Undo
+        </Button>
       </div>
       <Board
         board={board}

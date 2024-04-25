@@ -16,3 +16,12 @@
 .button:active {
   background-color: rgba(255,255,255, 0.15);
 }
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.button:disabled:active {
+  background-color: rgba(255, 255, 255, 0.2);
+}

@@ -1,7 +1,7 @@
-import GameClass from '../models/Game';
+import GameClass from '../models/GameClass';
 import { aiMoveObj, AiPersona, COL_COUNT, MoveType, PlayerColor } from '../models/gameModels';
-import { countOpportunities, getOtherPlayer, successCheck } from './gameFns';
-import { firstFalsyIdx, randomArrayElement } from './utils';
+import { getOtherPlayer, successCheck } from './gameFns';
+import { randomArrayElement } from './utils';
 
 const { act, filter, score } = MoveType;
 
@@ -56,7 +56,7 @@ export const moveFns: { [key: string]: aiMoveObj } = {
         const c = moveOptions[m];
         const verticalTrapIdx = game.findVerticalTrap(c, game.currentPlayer);
         if (verticalTrapIdx === -1) continue;
-        const firstEmptyRow = firstFalsyIdx(game.board[c]);
+        const firstEmptyRow = game.board.getRevealedRow(c);
         verticalTraps.push({ col: c, height: verticalTrapIdx - firstEmptyRow });
       }
       // TODO: if multiple columns with vertical traps exist, should return the one with the least moves to actualize
@@ -124,13 +124,13 @@ export const moveFns: { [key: string]: aiMoveObj } = {
     moveType: MoveType.act,
     testGameDepth: 0,
     fn: (game, moveOptions) => {
-      const opportunities = countOpportunities(game.board);
+      const opportunities = game.board.opportunityCountMap;
       const player = game.currentPlayer;
       const moveValue: number[] = new Array(COL_COUNT).fill(0);
       let max = 0;
       let bestMoves: number[] = [];
       for (let col of moveOptions) {
-        const row = firstFalsyIdx(game.board[col]);
+        const row = game.board.getRevealedRow(col);
         moveValue[col] = opportunities[player][col][row];
         if (moveValue[col] > max) {
           bestMoves = [col];
@@ -197,14 +197,14 @@ export const aiMove = (persona: AiPersona, game: GameClass): number => {
     if (step.move.moveType === act) {
       if (moves.length) {
         if (successCheck(moves.length, step.chance)) {
-          console.log(`aiMove act ${step.move.moveName}`, { goodMoves: moves });
+          console.info(`aiMove act ${step.move.moveName}`, { goodMoves: moves });
           return randomArrayElement(moves);
         }
       }
     } else if (step.move.moveType === filter && moves.length) {
-      console.log(`aiMove filter ${step.move.moveName}`, { badMoves: moves });
+      console.info(`aiMove filter ${step.move.moveName}`, { badMoves: moves });
       if (moves.length === currentMoves.length) {
-        console.log(`Only bad moves remain, according to ${step.move.moveName}`);
+        console.info(`Only bad moves remain, according to ${step.move.moveName}`);
       }
       for (let move of moves) {
         if (successCheck(1, step.chance) && currentMoves.length > 1) {
@@ -219,7 +219,7 @@ export const aiMove = (persona: AiPersona, game: GameClass): number => {
 };
 
 const enablesMajorThreat = (game: GameClass, player: PlayerColor) => (col: number) => {
-  const row = firstFalsyIdx(game.board[col]) + 1;
+  const row = game.board.getRevealedRow(col) + 1;
   const enablesMajorThreat = game.isWinningCoord({ row, col }, player);
   return enablesMajorThreat;
 };

@@ -1,4 +1,4 @@
-import GameClass from './Game';
+import GameClass from './GameClass';
 
 export const ROW_COUNT = 6;
 export const COL_COUNT = 7;
@@ -50,7 +50,6 @@ export const emptyBoard: BoardState = [
 
 export type Coord = { row: number; col: number };
 
-// TODO: rework to allow for double wins, 5 in a row, etc
 export interface VictoryObject {
   player: PlayerToken;
   coordinates: Coord[] | null;

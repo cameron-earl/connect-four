@@ -9,7 +9,7 @@ Features to implement:
 - ~~key press for moves and reset~~
 - ~~highlight cells that will result in win - with config var for on/off~~
 - ~~Dropping animation!~~
-- Some indicator for last piece played - pulse? jiggle?
+- Some indicator for last piece played - pulse? jiggle? rotation?
 - Undo
 - UI Controls:
   - Choose which color goes first

@@ -1,4 +1,4 @@
-import GameClass from '../models/Game';
+import GameClass from '../models/GameClass';
 import { _, BoardState, R, Y } from '../models/gameModels';
 import { moveFns } from './aiFns';
 

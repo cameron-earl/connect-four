@@ -1,187 +1,5 @@
-import { _, BoardState, emptyColumn, R, Y } from '../models/gameModels';
-import {
-  checkLineForWin,
-  colIdxInBounds,
-  getCol,
-  getCoordFromLine,
-  getOtherPlayer,
-  getRow,
-  getULDiagonal,
-  getULDiagonalObj,
-  getURDiagonal,
-  getURDiagonalObj,
-  rowIdxInBounds,
-} from './gameFns';
-
-describe('getRow', () => {
-  const board: BoardState = [
-    [R, R, R, Y, R, R],
-    [R, R, Y, R, R, R],
-    [R, Y, R, R, R, R],
-    [Y, R, R, R, R, R],
-    [R, R, R, R, R, Y],
-    [R, R, R, R, Y, R],
-    [R, R, R, Y, R, R],
-  ];
-  it('should return the correct row', () => {
-    const actual = getRow(board, 0);
-    expect(actual).toEqual([R, R, R, Y, R, R, R]);
-  });
-});
-
-describe('getCol', () => {
-  const board: BoardState = [
-    [R, R, R, Y, R, R],
-    [R, R, Y, R, R, R],
-    [R, Y, R, R, R, R],
-    [Y, R, R, R, R, R],
-    [R, R, R, R, R, Y],
-    [R, R, R, R, Y, R],
-    [R, R, R, Y, R, R],
-  ];
-
-  it('should return the correct col', () => {
-    const actual = getCol(board, 0);
-    expect(actual).toEqual([R, R, R, Y, R, R]);
-    expect(actual).not.toBe(board[0]);
-  });
-});
-
-describe('colIdxInBounds', () => {
-  it('should return false for -1', () => {
-    expect(colIdxInBounds(-1)).toBeFalsy();
-  });
-  it('should return false for 7', () => {
-    expect(colIdxInBounds(7)).toBeFalsy();
-  });
-  it('should return true for 0', () => {
-    expect(colIdxInBounds(0)).toBeTruthy();
-  });
-  it('should return true for 6', () => {
-    expect(colIdxInBounds(6)).toBeTruthy();
-  });
-});
-
-describe('rowIdxInBounds', () => {
-  it('should return false for -1', () => {
-    expect(rowIdxInBounds(-1)).toBeFalsy();
-  });
-  it('should return false for 7', () => {
-    expect(rowIdxInBounds(6)).toBeFalsy();
-  });
-  it('should return true for 0', () => {
-    expect(rowIdxInBounds(0)).toBeTruthy();
-  });
-  it('should return true for 6', () => {
-    expect(rowIdxInBounds(5)).toBeTruthy();
-  });
-});
-
-describe('getULDiagonal', () => {
-  it('should return the correct UL diagonals', () => {
-    const board: BoardState = [
-      [R, R, R, Y, R, Y],
-      [R, R, Y, R, R, R],
-      [R, Y, R, R, R, R],
-      [Y, R, Y, Y, R, R],
-      [R, R, R, R, R, Y],
-      [R, Y, R, Y, Y, R],
-      [R, R, R, Y, R, R],
-    ];
-    expect(getULDiagonal(board, 3, 0)).toEqual([Y, Y, Y, Y]);
-    expect(getULDiagonal(board, 1, 4)).toEqual([R, R, Y, R, R, Y]);
-    expect(getULDiagonal(board, 5, 1)).toEqual([R, Y, R, Y, R, R]);
-    expect(getULDiagonal(board, 5, 3)).toEqual([R, Y, R, R]);
-  });
-});
-
-describe('getURDiagonal', () => {
-  it('should return the correct UR diagonals', () => {
-    const board: BoardState = [
-      [R, R, R, Y, R, Y],
-      [R, R, Y, R, R, R],
-      [R, Y, R, R, R, R],
-      [Y, R, Y, Y, R, R],
-      [R, R, R, R, R, Y],
-      [R, Y, R, Y, Y, R],
-      [R, R, R, Y, R, R],
-    ];
-    expect(getURDiagonal(board, 3, 0)).toEqual([Y, R, R, Y]);
-    expect(getURDiagonal(board, 5, 4)).toEqual([R, Y, Y, R, Y, R]);
-    expect(getURDiagonal(board, 1, 1)).toEqual([R, R, R, Y, R, R]);
-    expect(getURDiagonal(board, 1, 3)).toEqual([R, R, R, R]);
-  });
-});
-
-describe('getULDiagonalObj', () => {
-  it('should return single value from 2D array of 1', () => {
-    const arr = [['A']];
-    const actual = getULDiagonalObj(arr, 0, 0);
-
-    expect(actual.line).toEqual(['A']);
-    expect(actual.index).toEqual(0);
-  });
-
-  it('should return correct values from 2D array of 2, 2', () => {
-    const arr = [
-      ['A', 'B'],
-      ['C', 'D'],
-    ];
-
-    const actual = getULDiagonalObj(arr, 1, 0);
-
-    expect(actual.line).toEqual(['C', 'B']);
-    expect(actual.index).toEqual(0);
-  });
-
-  it('should return correct values from 2D array of 7, 6', () => {
-    const board: BoardState = [
-      [R, R, R, Y, R, R],
-      [R, R, R, R, R, R],
-      [R, Y, R, R, R, R],
-      [Y, R, R, R, R, R],
-      [R, R, R, R, R, R],
-      [R, R, R, R, R, R],
-      [R, R, R, R, R, R],
-    ];
-
-    const actual = getULDiagonalObj(board, 2, 1);
-    expect(actual.line).toEqual([Y, Y, R, Y]);
-    expect(actual.index).toEqual(1);
-  });
-});
-
-describe('getURiagonalObj', () => {
-  it('should return correct values from 2D array of 7, 6', () => {
-    const board: BoardState = [
-      [R, R, R, R, R, R],
-      [Y, R, R, R, R, R],
-      [R, Y, R, R, R, R],
-      [R, R, Y, R, R, R],
-      [R, R, R, Y, R, R],
-      [R, R, R, R, R, R],
-      [R, R, R, R, R, R],
-    ];
-
-    const actual = getURDiagonalObj(board, 2, 1);
-    expect(actual.line).toEqual([Y, Y, Y, Y, R, R]);
-    expect(actual.index).toEqual(1);
-  });
-
-  it('should handle a problem case', () => {
-    const board: BoardState = [
-      emptyColumn,
-      emptyColumn,
-      [R, _, _, _, _, _],
-      [Y, R, _, _, _, _],
-      [Y, Y, R, _, _, _],
-      [Y, Y, Y, _, _, _],
-      emptyColumn,
-    ];
-    const actual = getURDiagonalObj(board, 5, 3);
-    expect(actual.line).toEqual([R, R, R, _, _]);
-  });
-});
+import { _, emptyColumn, PlayerColor, R, Y } from '../models/gameModels';
+import { checkLineForWin, coordToMoveStr, getCoordFromLine, getOtherPlayer, moveStrToCoord } from './gameFns';
 
 describe('getAllLines', () => {
   it.todo('should return proper lines');
@@ -269,5 +87,37 @@ describe('getOtherPlayer', () => {
 
   it('should return Yellow given Red', () => {
     expect(getOtherPlayer(R)).toBe(Y);
+  });
+});
+
+describe('moveStrToCoord', () => {
+  it.each([
+    ['A1', { col: 0, row: 0 }],
+    ['B1', { col: 1, row: 0 }],
+    ['C1', { col: 2, row: 0 }],
+    ['D1', { col: 3, row: 0 }],
+    ['E1', { col: 4, row: 0 }],
+    ['F1', { col: 5, row: 0 }],
+    ['G1', { col: 6, row: 0 }],
+    ['b4', { col: 1, row: 3 }],
+    ['g2', { col: 6, row: 1 }],
+    ['D6', { col: 3, row: 5 }],
+    ['d1', { col: 3, row: 0 }],
+    ['C3', { col: 2, row: 2 }],
+  ])('should return correct coord given %s', (given, expected) => {
+    expect(moveStrToCoord(given)).toEqual(expected);
+  });
+});
+
+describe('coordToMoveStr', () => {
+  it.each([
+    ['A1', { col: 0, row: 0 }, R],
+    ['b4', { col: 1, row: 3 }, Y],
+    ['g2', { col: 6, row: 1 }, Y],
+    ['D6', { col: 3, row: 5 }, R],
+    ['d1', { col: 3, row: 0 }, Y],
+    ['C3', { col: 2, row: 2 }, R],
+  ])('should return correct coord given %s', (expected, coord, player) => {
+    expect(coordToMoveStr(coord, player as PlayerColor)).toEqual(expected);
   });
 });

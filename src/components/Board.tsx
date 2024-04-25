@@ -1,6 +1,6 @@
 import React from 'react';
 
-import GameClass from '../models/Game';
+import GameClass from '../models/GameClass';
 import { BoardState, Empty, VictoryObject } from '../models/gameModels';
 import styles from './Board.module.css';
 import Cell from './Cell';
@@ -29,7 +29,7 @@ const Board = ({ board, game, gameOver, displayHints, handleColumnClick, isHuman
         {col.map((cell, rowIdx) => {
           const isWinningCoord: boolean =
             !!gameOver && !!gameOver.coordinates?.some((c) => c.col === colIdx && c.row === rowIdx);
-          const majorThreat = displayHints ? game.majorThreats[colIdx][rowIdx] : Empty;
+          const majorThreat = displayHints ? game.board.majorThreatMap[colIdx][rowIdx] : Empty;
           const isNew = !!game.lastCoord && colIdx === game.lastCoord.col && rowIdx === game.lastCoord.row;
           return (
             <Cell
