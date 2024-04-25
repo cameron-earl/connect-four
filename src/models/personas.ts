@@ -35,6 +35,17 @@ export const aiPersonas: { [key: string]: AiPersona } = {
       { chance: 1, move: moveFns.mostOpportunities },
     ],
   },
+  blocker: {
+    name: 'Blocker',
+    description: 'Prioritizes blocking their opponent, perhaps too much.',
+    instructions: [
+      { chance: 1, move: moveFns.win },
+      { chance: 1, move: moveFns.blockLoss },
+      { chance: 1, move: moveFns.avoidEnablingLoss },
+      { chance: 1, move: moveFns.avoidEnablingImmediateTrap },
+      { chance: 1, move: moveFns.mostBlocks },
+    ],
+  },
   hard: {
     name: 'Hard',
     description: 'No mistakes, strategy, short game, but not perfect either',
@@ -48,6 +59,7 @@ export const aiPersonas: { [key: string]: AiPersona } = {
       { chance: 1, move: moveFns.createVerticalTrap },
       { chance: 1, move: moveFns.avoidEnablingBlock },
       { chance: 1, move: moveFns.mostOpportunities },
+      { chance: 1, move: moveFns.mostBlocks },
     ],
   },
 };

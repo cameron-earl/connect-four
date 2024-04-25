@@ -10,14 +10,15 @@ Features to implement:
 - ~~highlight cells that will result in win - with config var for on/off~~
 - ~~Dropping animation!~~
 - Some indicator for last piece played - pulse? jiggle? rotation?
+  rotate number back and forth, subtle
 - Undo
 - UI Controls:
   - Choose which color goes first
-  - beautify reset button
-  - create dropdowns for players (human and each AI persona)
+  - ~~beautify reset button~~
+  - ~~create dropdowns for players (human and each AI persona)~~
   - swap first and second player button
   - alternate between first and second player between games setting
-- Indicator for current player - highlight input area
+- ~~Indicator for current player - highlight input area~~
 - Keep track of wins, losses, and draws
 - Coaching to help the user understand the results of each move
 
@@ -26,7 +27,7 @@ Features to implement:
 - create in-game log for ai personas to make comments during certain successful moves
 - create different personalities (like condescending, apathetic, timid, etc) and (multiple?) messages for each play and personality
 - create avatars and names for each persona?
-- create function to evaluate the number of possible wins that cell contributes to, for each player
+- ~~create function to evaluate the number of possible wins that cell contributes to, for each player~~
 - ~~create modular ai~~
   - ~~a persona can have multiple modules~~
   - ~~modules arranged in a list~~
@@ -37,7 +38,7 @@ Features to implement:
     - ~~identify available winning move~~
     - ~~identify opponent winning move~~
     - ~~identify moves that enable opponent winning move~~
-    - identify which moves are part of the most potential wins
+    - ~~identify which moves are part of the most potential wins~~
     - identify which moves are part of the most potential losses
     - brute force search the next n moves for wins and losses
     - minimax with alpha-beta pruning

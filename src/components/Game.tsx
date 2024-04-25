@@ -13,9 +13,9 @@ import Select from './Select';
 // should manage overall game state and non-game UI components (reset button, set players, game settings, log, etc)
 
 const DISPLAY_HINTS = true;
+const HUMAN = 'human';
 
-// TODO: map from keys in personas
-const playerOptions = ['human', ...Object.keys(aiPersonas)].map((str) => ({
+const playerOptions = [HUMAN, ...Object.keys(aiPersonas)].map((str) => ({
   value: str,
   label: str[0].toUpperCase() + str.slice(1),
 }));
@@ -24,11 +24,12 @@ const game = new GameClass();
 
 function Game() {
   const [board, setBoard] = useState(game.board.boardArr);
-  const [players, setPlayers] = useState(['human', 'medium']);
+  const [players, setPlayers] = useState([HUMAN, 'medium']);
 
   let gameOver = game.gameOver;
   const currentPlayer = players[game.currentPlayer - 1];
-  const isHumanPlayer = currentPlayer === 'human';
+  const isHumanPlayer = currentPlayer === HUMAN;
+  const hasHumanPlayer = players.includes(HUMAN);
 
   const handleColumnClick = (colIndex: number) => () => {
     if (!isHumanPlayer) return;
@@ -49,7 +50,7 @@ function Game() {
   };
 
   const undo = () => {
-    const humanPlayerCount = players.reduce((total, el) => total + Number(el === 'human'), 0);
+    const humanPlayerCount = players.reduce((total, el) => total + Number(el === HUMAN), 0);
     if (humanPlayerCount === 2) game.undo(1);
     else game.undo(2);
     setTimeout(() => setBoard(game.board.boardArr), 100);
@@ -106,7 +107,7 @@ function Game() {
           onChange={handlePlayerSelect(1)}
         ></Select>
         <Button onClick={reset}>Reset</Button>
-        <Button disabled={!game.moveCount} onClick={undo}>
+        <Button disabled={!game.moveCount || (!isHumanPlayer && !game.gameOver) || !hasHumanPlayer} onClick={undo}>
           Undo
         </Button>
       </div>

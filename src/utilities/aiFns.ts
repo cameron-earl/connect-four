@@ -142,6 +142,30 @@ export const moveFns: { [key: string]: aiMoveObj } = {
       return bestMoves;
     },
   },
+  mostBlocks: {
+    moveName: 'mostOpportunities',
+    moveType: MoveType.act,
+    testGameDepth: 0,
+    fn: (game, moveOptions) => {
+      const opportunities = game.board.opportunityCountMap;
+      const player = game.currentPlayer;
+      const other = getOtherPlayer(player);
+      const moveValue: number[] = new Array(COL_COUNT).fill(0);
+      let max = 0;
+      let mostBlocks: number[] = [];
+      for (let col of moveOptions) {
+        const row = game.board.getRevealedRow(col);
+        moveValue[col] = opportunities[other][col][row];
+        if (moveValue[col] > max) {
+          mostBlocks = [col];
+          max = moveValue[col];
+        } else if (moveValue[col] === max) {
+          mostBlocks.push(col);
+        }
+      }
+      return mostBlocks;
+    },
+  },
   avoidEnablingLoss: {
     moveName: 'avoidEnablingLoss',
     moveType: MoveType.filter,
@@ -194,22 +218,22 @@ export const aiMove = (persona: AiPersona, game: GameClass): number => {
     }
 
     const moves = step.move.fn(game, currentMoves, testGames);
-    if (step.move.moveType === act) {
-      if (moves.length) {
+    if (moves.length) {
+      if (step.move.moveType === act) {
         if (successCheck(moves.length, step.chance)) {
           console.info(`aiMove act ${step.move.moveName}`, { goodMoves: moves });
           return randomArrayElement(moves);
         }
-      }
-    } else if (step.move.moveType === filter && moves.length) {
-      console.info(`aiMove filter ${step.move.moveName}`, { badMoves: moves });
-      if (moves.length === currentMoves.length) {
-        console.info(`Only bad moves remain, according to ${step.move.moveName}`);
-      }
-      for (let move of moves) {
-        if (successCheck(1, step.chance) && currentMoves.length > 1) {
-          const idx = currentMoves.indexOf(move);
-          currentMoves.splice(idx, 1);
+      } else if (step.move.moveType === filter) {
+        console.info(`aiMove filter ${step.move.moveName}`, { badMoves: moves });
+        if (moves.length === currentMoves.length) {
+          console.info(`Only bad moves remain, according to ${step.move.moveName}`);
+        }
+        for (let move of moves) {
+          if (successCheck(1, step.chance) && currentMoves.length > 1) {
+            const idx = currentMoves.indexOf(move);
+            currentMoves.splice(idx, 1);
+          }
         }
       }
     }
