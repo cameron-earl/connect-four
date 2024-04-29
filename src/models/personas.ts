@@ -48,7 +48,7 @@ export const aiPersonas: { [key: string]: AiPersona } = {
   },
   hard: {
     name: 'Hard',
-    description: 'No mistakes, strategy, short game, but not perfect either',
+    description: 'No mistakes, good short and long game, but not perfect either',
     instructions: [
       { chance: 1, move: moveFns.win },
       { chance: 1, move: moveFns.blockLoss },
@@ -58,8 +58,8 @@ export const aiPersonas: { [key: string]: AiPersona } = {
       { chance: 1, move: moveFns.enableVerticalTrap },
       { chance: 1, move: moveFns.createVerticalTrap },
       { chance: 1, move: moveFns.avoidEnablingBlock },
-      { chance: 1, move: moveFns.mostOpportunities },
       { chance: 1, move: moveFns.mostBlocks },
+      { chance: 1, move: moveFns.mostOpportunities },
     ],
   },
 };

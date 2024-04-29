@@ -39,13 +39,13 @@ Features to implement:
     - ~~identify opponent winning move~~
     - ~~identify moves that enable opponent winning move~~
     - ~~identify which moves are part of the most potential wins~~
-    - identify which moves are part of the most potential losses
+    - ~~identify which moves are part of the most potential losses~~
     - brute force search the next n moves for wins and losses
     - minimax with alpha-beta pruning
 - creating combinatoric wins
   - ~~play creates two revealed major threats~~
   - ~~play reveals your major threat while creating a second~~
-  - play creates a threat immediately above your existing exclusive threat, or directly below your threat (exclusive or not)
+  - ~~play creates a threat immediately above your existing exclusive threat, or directly below your threat (exclusive or not)~~
   - play creates a threat which forces a block, which in turn allows a combinatoric trap
 - blocking combinatoric traps
   - check the above for the enemy, and play in any one of those spots that does not reveal their major threat
@@ -69,6 +69,8 @@ Features to implement:
 [Expert Play in Connect 4 (really good glossary)](https://tromp.github.io/c4.html)
 [Implemented spinning coin animation](https://codepen.io/xaelan/pen/wvwPpLa)
 [Simpler spinning coin animation - implement?](https://codepen.io/keiwo/pen/ZONRgx)
+[Connect 4 Solver tutorial](http://blog.gamesolver.org/)
+[Connect 4 Solver](https://connect4.gamesolver.org/)
 
 ### Interesting Games
 

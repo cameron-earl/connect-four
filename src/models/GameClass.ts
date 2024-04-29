@@ -1,15 +1,9 @@
-import {
-  checkLineForWin,
-  coordToMoveStr,
-  getCoordFromLine,
-  getOtherPlayer,
-  moveStrToCoord,
-} from '../utilities/gameFns';
+import { checkLineForWin, getCoordFromLine, getOtherPlayer } from '../utilities/gameFns';
 import { copy1dArr } from '../utilities/utils';
 import BoardClass from './BoardClass';
+import Coord from './Coord';
 import {
   BoardState,
-  Coord,
   Empty,
   getMoveList,
   LineType,
@@ -25,8 +19,7 @@ class GameClass {
   private _startTime: number = Date.now();
   private _board: BoardClass = new BoardClass();
   private _gameOver: VictoryObject | null = null;
-  private _moveLog: string[] = [];
-  private _lastCoord: Coord | null = null;
+  private _moveLog: Coord[] = [];
 
   constructor(board?: BoardState | GameClass, startingPlayer: PlayerColor = Red) {
     if (board instanceof GameClass) {
@@ -35,11 +28,10 @@ class GameClass {
       this._gameOver = other.gameOver;
       this._startTime = other.startTime;
       this._moveLog = copy1dArr(other.moveLog);
-      this._lastCoord = other.lastCoord;
     } else if (Array.isArray(board)) {
       const moveCount = board.reduce((sum, col) => sum + col.filter((cell) => cell !== Empty).length, 0);
       this._moveLog = new Array(moveCount).fill('?');
-      // TODO: moveLog and lastCoord problematic?
+      // TODO: moveLog problematic?
       this._board = new BoardClass(board);
     }
     this._startingPlayer = startingPlayer;
@@ -70,7 +62,8 @@ class GameClass {
   }
 
   get lastCoord() {
-    return this._lastCoord;
+    if (!this._moveLog.length) return null;
+    return this._moveLog[this._moveLog.length - 1];
   }
 
   public toggleStartingPlayer() {
@@ -85,7 +78,7 @@ class GameClass {
 
     const { row } = this._board.move(col, this.currentPlayer);
 
-    this.logMove({ col, row });
+    this.logMove(new Coord(col, row));
     this.checkForVictory();
   }
 
@@ -149,12 +142,11 @@ class GameClass {
   public isWinningMove(col: number, player: PlayerColor = this.currentPlayer): boolean {
     // TODO: move to BoardClass ?
     const row = this._board.getRevealedRow(col);
-    return this.isWinningCoord({ row, col }, player);
+    return this.isWinningCoord(new Coord(col, row), player);
   }
 
   private logMove(coord: Coord) {
-    this._lastCoord = coord;
-    this._moveLog.push(coordToMoveStr(coord, this.currentPlayer));
+    this._moveLog.push(coord);
   }
 
   public countRevealedThreats(player: PlayerColor) {
@@ -190,15 +182,9 @@ class GameClass {
   }
 
   public undo(n: number): void {
-    for (let i = 0; this._moveLog.length && i < n && this._lastCoord; i++) {
-      this.board.remove(this._lastCoord.col);
+    for (let i = 0; this._moveLog.length && i < n && this.lastCoord; i++) {
+      this.board.remove(this.lastCoord.col);
       this._moveLog.pop();
-      if (this._moveLog.length) {
-        const lastMoveStr = this._moveLog[this._moveLog.length - 1];
-        this._lastCoord = moveStrToCoord(lastMoveStr);
-      } else {
-        this._lastCoord = null;
-      }
     }
     this.checkForVictory();
   }

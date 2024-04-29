@@ -1,3 +1,4 @@
+import Coord from '../models/Coord';
 import GameClass from '../models/GameClass';
 import { aiMoveObj, AiPersona, COL_COUNT, MoveType, PlayerColor } from '../models/gameModels';
 import { getOtherPlayer, successCheck } from './gameFns';
@@ -166,6 +167,35 @@ export const moveFns: { [key: string]: aiMoveObj } = {
       return mostBlocks;
     },
   },
+  claimEvenOdd: {
+    moveName: 'claimEvenOdd',
+    moveType: MoveType.act,
+    testGameDepth: 0,
+    fn: (game, moveOptions) => {
+      const result: number[] = [];
+      // TODO: rewatch video to make sure I understand strat
+      // get major threat map (?)
+      // count empty below major threats.
+      //   rather complex - should assume players will preferentially expose their own threats to blocking
+      //   should account for control switching
+      // determine whether player is in control or not
+      // determine whether opponent has possible matches not including spots claimed by strat
+      // if in control and opponent will not create new threats on their spaces, go for it
+      // if not, return empty array
+
+      // claimEven:
+      //   player is yellow
+      //   red has no odd threats that are not undercut by an even yellow potential threat (?)
+      //     how to calculate?
+      //   all columns have even amounts of empty spaces left (?)
+      //     many exceptions!
+      //   create a test board filling in all empty spaces with red in odd rows and yellow in even
+      //   if red doesn't win and yellow does, do it
+      //   if red wins but is undercut by a yellow win, do it
+      //   if only one column is odd, can try it too by simulating going on the odd column
+      throw new Error('claimEvenOdd is not yet implemented');
+    },
+  },
   avoidEnablingLoss: {
     moveName: 'avoidEnablingLoss',
     moveType: MoveType.filter,
@@ -244,7 +274,7 @@ export const aiMove = (persona: AiPersona, game: GameClass): number => {
 
 const enablesMajorThreat = (game: GameClass, player: PlayerColor) => (col: number) => {
   const row = game.board.getRevealedRow(col) + 1;
-  const enablesMajorThreat = game.isWinningCoord({ row, col }, player);
+  const enablesMajorThreat = game.isWinningCoord(new Coord(row, col), player);
   return enablesMajorThreat;
 };
 

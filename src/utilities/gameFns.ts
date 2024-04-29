@@ -1,7 +1,7 @@
+import Coord from '../models/Coord';
 import {
   BoardState,
   CENTER_COL,
-  Coord,
   Empty,
   emptyBoard,
   Line,
@@ -42,9 +42,9 @@ export const getCoordFromLine = (lineType: LineType, lineIdx: number, cellIdx: n
   let row: number;
   switch (lineType) {
     case 'rows':
-      return { col: cellIdx, row: lineIdx };
+      return new Coord(cellIdx, lineIdx);
     case 'cols':
-      return { col: lineIdx, row: cellIdx };
+      return new Coord(lineIdx, cellIdx);
     case 'UR':
       col = CENTER_COL - lineIdx + cellIdx;
       row = cellIdx;
@@ -52,7 +52,7 @@ export const getCoordFromLine = (lineType: LineType, lineIdx: number, cellIdx: n
         col += lineIdx - CENTER_COL;
         row += lineIdx - CENTER_COL;
       }
-      return { col, row };
+      return new Coord(col, row);
     case 'UL':
       col = CENTER_COL + lineIdx - cellIdx;
       row = cellIdx;
@@ -60,7 +60,7 @@ export const getCoordFromLine = (lineType: LineType, lineIdx: number, cellIdx: n
         col -= lineIdx - CENTER_COL;
         row += lineIdx - CENTER_COL;
       }
-      return { col, row };
+      return new Coord(col, row);
     default:
   }
   throw new Error(`This shouldn't happen`);
@@ -98,16 +98,3 @@ export const getEmptyBoardArr = (): BoardState => {
 };
 
 export const matches = (player: PlayerColor) => (val: PlayerToken) => val === Empty || val === player;
-
-export const moveStrToCoord = (moveStr: string) => {
-  const [colStr, rowStr] = moveStr.split('');
-  const row = Number(rowStr) - 1;
-  const col = colStr.toLowerCase().charCodeAt(0) - 97;
-  return { row, col };
-};
-
-export const coordToMoveStr = (coord: Coord, player: PlayerColor) => {
-  let colStr = 'ABCDEFG';
-  if (player === PlayerToken.Yellow) colStr = colStr.toLowerCase();
-  return colStr[coord.col] + (coord.row + 1);
-};

@@ -2,7 +2,7 @@ import React, { MouseEventHandler, useEffect, useState } from 'react';
 
 import { useKeyDown } from '../hooks/useKeyDown';
 import GameClass from '../models/GameClass';
-import { PlayerToken } from '../models/gameModels';
+import { PlayerColor, PlayerToken, Red, Yellow } from '../models/gameModels';
 import { aiPersonas } from '../models/personas';
 import { aiMove } from '../utilities/aiFns';
 import Board from './Board';
@@ -124,11 +124,14 @@ function Game() {
         <div className={styles.gameOverMessage}>{PlayerToken[gameOver.player]} Wins!</div>
       )}
       <div className={styles.moveLog} onClick={(ev) => copyMoveLog(ev)}>
-        {game.moveLog.map((move) => (
-          <div className={styles.loggedMove} key={move}>
-            {move}
-          </div>
-        ))}
+        {game.moveLog.map((move, i) => {
+          const player: PlayerColor = i % 2 ? Yellow : Red;
+          return (
+            <div className={styles.loggedMove} key={move.toString(player)}>
+              {move.toString(player)}
+            </div>
+          );
+        })}
       </div>
       {gameOver && !gameOver.coordinates && <div className={styles.gameOverMessage}>Stalemate!</div>}
     </div>

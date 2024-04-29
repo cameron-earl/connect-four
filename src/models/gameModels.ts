@@ -1,3 +1,4 @@
+import Coord from './Coord';
 import GameClass from './GameClass';
 
 export const ROW_COUNT = 6;
@@ -47,8 +48,6 @@ export const emptyBoard: BoardState = [
   [...emptyColumn],
   [...emptyColumn],
 ] as BoardState;
-
-export type Coord = { row: number; col: number };
 
 export interface VictoryObject {
   player: PlayerToken;

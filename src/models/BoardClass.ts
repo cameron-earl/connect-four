@@ -7,12 +7,12 @@ import {
   removeInaccessibleThreats,
 } from '../utilities/gameFns';
 import { copy1dArr, copy2dArr, firstFalsyIdx } from '../utilities/utils';
+import Coord from './Coord';
 import {
   BoardState,
   CENTER_COL,
   COL_COUNT,
   Column,
-  Coord,
   Empty,
   Line,
   LineObj,
@@ -48,7 +48,7 @@ class BoardClass {
     const row = firstFalsyIdx(this._boardArr[col]);
     this._boardArr[col][row] = player;
     this.resetAnalysis();
-    return { col, row };
+    return new Coord(col, row);
   }
 
   remove(col: number): void {
