@@ -9,35 +9,35 @@ describe('getAllLines', () => {
 describe('getCoordFromLine', () => {
   describe('rows', () => {
     it('should correctly translate row coords', () => {
-      expect(getCoordFromLine('rows', 2, 5)).toEqual(new Coord(5, 2));
-      expect(getCoordFromLine('rows', 5, 6)).toEqual(new Coord(6, 5));
-      expect(getCoordFromLine('rows', 0, 0)).toEqual(new Coord(0, 0));
+      expect(getCoordFromLine('rows', 2, 5)).toEqual(new Coord({ col: 5, row: 2 }));
+      expect(getCoordFromLine('rows', 5, 6)).toEqual(new Coord({ col: 6, row: 5 }));
+      expect(getCoordFromLine('rows', 0, 0)).toEqual(new Coord({ col: 0, row: 0 }));
     });
   });
   describe('cols', () => {
     it('should correctly translate col coords', () => {
-      expect(getCoordFromLine('cols', 5, 2)).toEqual(new Coord(5, 2));
-      expect(getCoordFromLine('cols', 6, 5)).toEqual(new Coord(6, 5));
-      expect(getCoordFromLine('cols', 0, 0)).toEqual(new Coord(0, 0));
+      expect(getCoordFromLine('cols', 5, 2)).toEqual(new Coord({ col: 5, row: 2 }));
+      expect(getCoordFromLine('cols', 6, 5)).toEqual(new Coord({ col: 6, row: 5 }));
+      expect(getCoordFromLine('cols', 0, 0)).toEqual(new Coord({ col: 0, row: 0 }));
     });
   });
   describe('UR', () => {
     it('should correctly translate UR coords', () => {
-      expect(getCoordFromLine('UR', 0, 0)).toEqual(new Coord(3, 0));
-      expect(getCoordFromLine('UR', 5, 1)).toEqual(new Coord(1, 3));
-      expect(getCoordFromLine('UR', 0, 3)).toEqual(new Coord(6, 3));
-      expect(getCoordFromLine('UR', 1, 4)).toEqual(new Coord(6, 4));
-      expect(getCoordFromLine('UR', 4, 2)).toEqual(new Coord(2, 3));
+      expect(getCoordFromLine('UR', 0, 0)).toEqual(new Coord({ col: 3, row: 0 }));
+      expect(getCoordFromLine('UR', 5, 1)).toEqual(new Coord({ col: 1, row: 3 }));
+      expect(getCoordFromLine('UR', 0, 3)).toEqual(new Coord({ col: 6, row: 3 }));
+      expect(getCoordFromLine('UR', 1, 4)).toEqual(new Coord({ col: 6, row: 4 }));
+      expect(getCoordFromLine('UR', 4, 2)).toEqual(new Coord({ col: 2, row: 3 }));
     });
   });
   describe('UL', () => {
     it('should correctly translate UL coords', () => {
-      expect(getCoordFromLine('UL', 0, 0)).toEqual(new Coord(3, 0));
-      expect(getCoordFromLine('UL', 0, 1)).toEqual(new Coord(2, 1));
-      expect(getCoordFromLine('UL', 1, 0)).toEqual(new Coord(4, 0));
-      expect(getCoordFromLine('UL', 3, 5)).toEqual(new Coord(1, 5));
-      expect(getCoordFromLine('UL', 4, 0)).toEqual(new Coord(6, 1));
-      expect(getCoordFromLine('UL', 5, 1)).toEqual(new Coord(5, 3));
+      expect(getCoordFromLine('UL', 0, 0)).toEqual(new Coord({ col: 3, row: 0 }));
+      expect(getCoordFromLine('UL', 0, 1)).toEqual(new Coord({ col: 2, row: 1 }));
+      expect(getCoordFromLine('UL', 1, 0)).toEqual(new Coord({ col: 4, row: 0 }));
+      expect(getCoordFromLine('UL', 3, 5)).toEqual(new Coord({ col: 1, row: 5 }));
+      expect(getCoordFromLine('UL', 4, 0)).toEqual(new Coord({ col: 6, row: 1 }));
+      expect(getCoordFromLine('UL', 5, 1)).toEqual(new Coord({ col: 5, row: 3 }));
     });
   });
 });

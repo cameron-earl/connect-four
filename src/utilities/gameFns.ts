@@ -42,9 +42,9 @@ export const getCoordFromLine = (lineType: LineType, lineIdx: number, cellIdx: n
   let row: number;
   switch (lineType) {
     case 'rows':
-      return new Coord(cellIdx, lineIdx);
+      return new Coord({ col: cellIdx, row: lineIdx });
     case 'cols':
-      return new Coord(lineIdx, cellIdx);
+      return new Coord({ col: lineIdx, row: cellIdx });
     case 'UR':
       col = CENTER_COL - lineIdx + cellIdx;
       row = cellIdx;
@@ -52,7 +52,7 @@ export const getCoordFromLine = (lineType: LineType, lineIdx: number, cellIdx: n
         col += lineIdx - CENTER_COL;
         row += lineIdx - CENTER_COL;
       }
-      return new Coord(col, row);
+      return new Coord({ col, row });
     case 'UL':
       col = CENTER_COL + lineIdx - cellIdx;
       row = cellIdx;
@@ -60,7 +60,7 @@ export const getCoordFromLine = (lineType: LineType, lineIdx: number, cellIdx: n
         col -= lineIdx - CENTER_COL;
         row += lineIdx - CENTER_COL;
       }
-      return new Coord(col, row);
+      return new Coord({ col, row });
     default:
   }
   throw new Error(`This shouldn't happen`);

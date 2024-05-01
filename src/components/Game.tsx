@@ -2,7 +2,7 @@ import React, { MouseEventHandler, useEffect, useState } from 'react';
 
 import { useKeyDown } from '../hooks/useKeyDown';
 import GameClass from '../models/GameClass';
-import { PlayerColor, PlayerToken, Red, Yellow } from '../models/gameModels';
+import { PlayerToken } from '../models/gameModels';
 import { aiPersonas } from '../models/personas';
 import { aiMove } from '../utilities/aiFns';
 import Board from './Board';
@@ -20,7 +20,7 @@ const playerOptions = [HUMAN, ...Object.keys(aiPersonas)].map((str) => ({
   label: str[0].toUpperCase() + str.slice(1),
 }));
 
-const game = new GameClass();
+let game = new GameClass();
 
 function Game() {
   const [board, setBoard] = useState(game.board.boardArr);
@@ -56,6 +56,13 @@ function Game() {
     setTimeout(() => setBoard(game.board.boardArr), 100);
   };
 
+  const pasteGame = () => {
+    const log = prompt('Enter game log');
+    if (!log) return;
+    game = new GameClass(log);
+    setBoard(game.board.boardArr);
+  };
+
   useKeyDown(
     (key: string) => {
       handleColumnClick(Number(key) - 1)();
@@ -64,6 +71,7 @@ function Game() {
   );
 
   useKeyDown(reset, ['r']);
+  useKeyDown(pasteGame, ['`']);
 
   const handlePlayerSelect = (player: 0 | 1) => (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newVal = event.target.value;
@@ -107,7 +115,7 @@ function Game() {
           onChange={handlePlayerSelect(1)}
         ></Select>
         <Button onClick={reset}>Reset</Button>
-        <Button disabled={!game.moveCount || (!isHumanPlayer && !game.gameOver) || !hasHumanPlayer} onClick={undo}>
+        <Button disabled={!hasHumanPlayer} onClick={undo}>
           Undo
         </Button>
       </div>
@@ -125,10 +133,9 @@ function Game() {
       )}
       <div className={styles.moveLog} onClick={(ev) => copyMoveLog(ev)}>
         {game.moveLog.map((move, i) => {
-          const player: PlayerColor = i % 2 ? Yellow : Red;
           return (
-            <div className={styles.loggedMove} key={move.toString(player)}>
-              {move.toString(player)}
+            <div className={styles.loggedMove} key={move.toString()}>
+              {move.toString()}
             </div>
           );
         })}

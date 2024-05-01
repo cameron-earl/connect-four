@@ -4,7 +4,7 @@ import { aiMoveObj, AiPersona, COL_COUNT, MoveType, PlayerColor } from '../model
 import { getOtherPlayer, successCheck } from './gameFns';
 import { randomArrayElement } from './utils';
 
-const { act, filter, score } = MoveType;
+const { act, filter } = MoveType;
 
 export const moveFns: { [key: string]: aiMoveObj } = {
   random: {
@@ -202,7 +202,7 @@ export const moveFns: { [key: string]: aiMoveObj } = {
     testGameDepth: 0,
     fn: (game, moveOptions) => {
       const otherPlayer = getOtherPlayer(game.currentPlayer);
-      return moveOptions.filter(enablesMajorThreat(game, otherPlayer));
+      return moveOptions.filter(exposesMajorThreat(game, otherPlayer));
     },
   },
   avoidEnablingBlock: {
@@ -211,7 +211,8 @@ export const moveFns: { [key: string]: aiMoveObj } = {
     testGameDepth: 0,
     fn: (game, moveOptions) => {
       // lower priority than enableVerticalTrap
-      return moveOptions.filter(enablesMajorThreat(game, game.currentPlayer));
+      const badMoves = moveOptions.filter(exposesMajorThreat(game, game.currentPlayer));
+      return badMoves;
     },
   },
   avoidEnablingImmediateTrap: {
@@ -272,13 +273,15 @@ export const aiMove = (persona: AiPersona, game: GameClass): number => {
   return moveFns.random.fn(game, currentMoves, testGames)[0];
 };
 
-const enablesMajorThreat = (game: GameClass, player: PlayerColor) => (col: number) => {
-  const row = game.board.getRevealedRow(col) + 1;
-  const enablesMajorThreat = game.isWinningCoord(new Coord(row, col), player);
-  return enablesMajorThreat;
-};
+export const exposesMajorThreat =
+  (game: GameClass, player: PlayerColor) =>
+  (col: number): boolean => {
+    const row = game.board.getRevealedRow(col) + 1;
+    const exposesMajorThreat = game.isWinningCoord(new Coord({ col, row }), player);
+    return exposesMajorThreat;
+  };
 
-const updateTestGames = (game: GameClass, moveOptions: number[], testGames: GameClass[] = []): GameClass[] => {
+export const updateTestGames = (game: GameClass, moveOptions: number[], testGames: GameClass[] = []): GameClass[] => {
   for (let move of moveOptions) {
     if (testGames[move]) continue;
     testGames[move] = new GameClass(game);

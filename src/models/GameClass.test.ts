@@ -85,7 +85,12 @@ describe('checkForVictory', () => {
 
     expect(actual).not.toBeNull();
     expect(actual?.player).toBe(R);
-    expect(actual?.coordinates).toEqual([new Coord(0, 0), new Coord(0, 1), new Coord(0, 2), new Coord(0, 3)]);
+    expect(actual?.coordinates).toEqual([
+      new Coord({ col: 0, row: 0 }),
+      new Coord({ col: 0, row: 1 }),
+      new Coord({ col: 0, row: 2 }),
+      new Coord({ col: 0, row: 3 }),
+    ]);
   });
 
   it('returns Red for horizontal red win', () => {
@@ -105,7 +110,12 @@ describe('checkForVictory', () => {
 
     expect(actual).not.toBeNull();
     expect(actual?.player).toBe(R);
-    expect(actual?.coordinates).toEqual([new Coord(0, 0), new Coord(1, 0), new Coord(2, 0), new Coord(3, 0)]);
+    expect(actual?.coordinates).toEqual([
+      new Coord({ col: 0, row: 0 }),
+      new Coord({ col: 1, row: 0 }),
+      new Coord({ col: 2, row: 0 }),
+      new Coord({ col: 3, row: 0 }),
+    ]);
   });
 
   it('returns Yellow for horizontal yellow win', () => {
@@ -125,7 +135,12 @@ describe('checkForVictory', () => {
 
     expect(actual).not.toBeNull();
     expect(actual?.player).toBe(Y);
-    expect(actual?.coordinates).toEqual([new Coord(2, 0), new Coord(3, 0), new Coord(4, 0), new Coord(5, 0)]);
+    expect(actual?.coordinates).toEqual([
+      new Coord({ col: 2, row: 0 }),
+      new Coord({ col: 3, row: 0 }),
+      new Coord({ col: 4, row: 0 }),
+      new Coord({ col: 5, row: 0 }),
+    ]);
   });
 });
 

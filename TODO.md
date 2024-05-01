@@ -24,7 +24,7 @@ A digital version of the classic game, [Connect 4](https://shop.hasbro.com/en-us
 - [ ] Add scoring and weighted probability
 - [ ] Allow users to design their own AI
 - [ ] Perfect ai
-  - requires mapping out all winning paths for red
+  - requires mapping out all winning paths for red?
   - requires finding optimal paths for yellow
 - [ ] Add AI attitudes, where they will say different things depending on the situation
   - [ ] Coaching/Informative
@@ -33,10 +33,20 @@ A digital version of the classic game, [Connect 4](https://shop.hasbro.com/en-us
 
 ### UX and Interface
 
+- [x] Allow game log to be pasted in to replicate previous game
+- [ ] FIXME: Fix cannot undo after pasting in game log
 - [ ] Add toggle for major threat visualization
 - [ ] Add about, github links, etc
-- [ ] Somehow indicate to user about hotkey feature
+- [ ] Somehow indicate to user about hotkey features
+- [ ] Add minor threat visualization?
+- [ ] Make fields tabbable
+- [ ] Go through accessibility checklist
 
 ### Code Cleanup
 
 - [x] Create coord class that handles stringification fns
+- [ ] Move various functions from GameClass to BoardClass
+- [ ] Fill in TODO tests
+- [ ] Check code coverage for missing tests
+- [ ] Address all TODO comments with items in TODO.md
+- [ ] Lighthouse checklist?

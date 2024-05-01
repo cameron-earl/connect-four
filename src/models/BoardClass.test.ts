@@ -229,3 +229,7 @@ describe('identifyMajorThreats', () => {
 describe('countOpportunities', () => {
   it.todo('should test countOpportunities');
 });
+
+describe('isEmpty', () => {
+  it.todo('should test isEmpty');
+});

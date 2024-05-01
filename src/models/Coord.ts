@@ -1,19 +1,22 @@
-import { PlayerColor, PlayerToken } from './gameModels';
+import { isUpperCase } from '../utilities/utils';
+import { PlayerColor, PlayerToken, Red, Yellow } from './gameModels';
 
 class Coord {
   private _row: number;
   private _col: number;
-  constructor(col: number | string, row?: number) {
-    if (typeof col === 'number' && row !== undefined && typeof row === 'number') {
-      this._col = col;
-      this._row = row;
-    } else if (typeof col === 'string') {
-      const [colStr, rowStr] = col.split('');
-
+  private _player: PlayerColor;
+  constructor(coord: { row: number; col: number } | string, player?: PlayerColor) {
+    if (typeof coord === 'object') {
+      this._col = coord.col;
+      this._row = coord.row;
+      this._player = player ? player : Red;
+    } else if (typeof coord === 'string') {
+      const [colStr, rowStr] = coord.split('');
       this._col = colStr.toLowerCase().charCodeAt(0) - 97;
       this._row = Number(rowStr) - 1;
+      this._player = isUpperCase(colStr) ? Red : Yellow;
     } else {
-      throw new Error(`Called Coord constructer with invalid args: col:${col}, row:${row}`);
+      throw new Error(`Called Coord constructer with invalid arg: coord: ${coord}`);
     }
   }
 
@@ -25,9 +28,13 @@ class Coord {
     return this._col;
   }
 
-  toString(player: PlayerColor): string {
+  get player() {
+    return this._player;
+  }
+
+  toString(): string {
     let colStr = 'ABCDEFG';
-    if (player === PlayerToken.Yellow) colStr = colStr.toLowerCase();
+    if (this._player === PlayerToken.Yellow) colStr = colStr.toLowerCase();
     return colStr[this.col] + (this.row + 1);
   }
 

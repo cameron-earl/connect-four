@@ -24,3 +24,10 @@ export const copy2dArr = <T>(arr: T[][]): T[][] => {
 };
 
 export const firstFalsyIdx = <T>(arr: T[]): number => arr.findIndex((e) => !e);
+
+export const isLowerCase = (str: string): boolean => {
+  return str === str.toLowerCase() && str !== str.toUpperCase();
+};
+export const isUpperCase = (str: string): boolean => {
+  return str === str.toUpperCase() && str !== str.toLowerCase();
+};

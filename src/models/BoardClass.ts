@@ -48,7 +48,7 @@ class BoardClass {
     const row = firstFalsyIdx(this._boardArr[col]);
     this._boardArr[col][row] = player;
     this.resetAnalysis();
-    return new Coord(col, row);
+    return new Coord({ col, row });
   }
 
   remove(col: number): void {
@@ -186,6 +186,10 @@ class BoardClass {
     }
     this._opportunityCountMap = result;
     return this._opportunityCountMap;
+  }
+
+  isEmpty(): boolean {
+    return !this.getRow(0).some(Boolean);
   }
 }
 

@@ -21,18 +21,26 @@ class GameClass {
   private _gameOver: VictoryObject | null = null;
   private _moveLog: Coord[] = [];
 
-  constructor(board?: BoardState | GameClass, startingPlayer: PlayerColor = Red) {
-    if (board instanceof GameClass) {
-      const other: GameClass = board;
+  constructor(initializer?: GameClass | BoardState | string, startingPlayer: PlayerColor = Red) {
+    if (initializer instanceof GameClass) {
+      const other: GameClass = initializer;
       this._board = new BoardClass(other.board);
       this._gameOver = other.gameOver;
       this._startTime = other.startTime;
       this._moveLog = copy1dArr(other.moveLog);
-    } else if (Array.isArray(board)) {
+    } else if (Array.isArray(initializer)) {
+      const board = initializer as BoardState;
       const moveCount = board.reduce((sum, col) => sum + col.filter((cell) => cell !== Empty).length, 0);
       this._moveLog = new Array(moveCount).fill('?');
       // TODO: moveLog problematic?
       this._board = new BoardClass(board);
+    } else if (typeof initializer === 'string') {
+      const moveArr = initializer.split(' ').map((str) => new Coord(str));
+      this._moveLog = moveArr;
+      this._board = new BoardClass();
+      for (let move of moveArr) {
+        this._board.move(move.col, move.player);
+      }
     }
     this._startingPlayer = startingPlayer;
   }
@@ -78,7 +86,7 @@ class GameClass {
 
     const { row } = this._board.move(col, this.currentPlayer);
 
-    this.logMove(new Coord(col, row));
+    this.logMove(new Coord({ col, row }, this.currentPlayer));
     this.checkForVictory();
   }
 
@@ -142,7 +150,7 @@ class GameClass {
   public isWinningMove(col: number, player: PlayerColor = this.currentPlayer): boolean {
     // TODO: move to BoardClass ?
     const row = this._board.getRevealedRow(col);
-    return this.isWinningCoord(new Coord(col, row), player);
+    return this.isWinningCoord(new Coord({ col, row }), player);
   }
 
   private logMove(coord: Coord) {
@@ -182,6 +190,7 @@ class GameClass {
   }
 
   public undo(n: number): void {
+    console.log({ fn: 'undo', moveLog: this._moveLog });
     for (let i = 0; this._moveLog.length && i < n && this.lastCoord; i++) {
       this.board.remove(this.lastCoord.col);
       this._moveLog.pop();
