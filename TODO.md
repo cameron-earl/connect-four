@@ -4,8 +4,8 @@ A digital version of the classic game, [Connect 4](https://shop.hasbro.com/en-us
 
 ### Deploy
 
-- [ ] Upload repo to github
 - [ ] Publish on pages
+- [x] Upload repo to github
 
 ### Style
 

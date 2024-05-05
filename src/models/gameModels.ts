@@ -38,16 +38,9 @@ export type BoardState = [Column, Column, Column, Column, Column, Column, Column
 
 export const emptyColumn: Column = [_, _, _, _, _, _];
 export const emptyRow: Row = [_, _, _, _, _, _, _];
+export const getEmptyColumn = (): Column => [...emptyColumn] as Column;
 
-export const emptyBoard: BoardState = [
-  [...emptyColumn],
-  [...emptyColumn],
-  [...emptyColumn],
-  [...emptyColumn],
-  [...emptyColumn],
-  [...emptyColumn],
-  [...emptyColumn],
-] as BoardState;
+export const emptyBoard: BoardState = new Array(7).fill(null).map(getEmptyColumn) as BoardState;
 
 export interface VictoryObject {
   player: PlayerToken;

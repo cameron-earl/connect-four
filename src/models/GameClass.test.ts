@@ -1,7 +1,7 @@
 import { getEmptyBoardArr } from '../utilities/gameFns';
 import Coord from './Coord';
 import GameClass from './GameClass';
-import { _, BoardState, emptyColumn, R, Y } from './gameModels';
+import { _, BoardState, getEmptyColumn, R, Y } from './gameModels';
 
 describe('constructor', () => {
   it("initializes with an empty board and red's turn", () => {
@@ -72,11 +72,11 @@ describe('checkForVictory', () => {
     const board: BoardState = [
       [R, R, R, R, _, _],
       [Y, Y, Y, _, _, _],
-      [...emptyColumn],
-      [...emptyColumn],
-      [...emptyColumn],
-      [...emptyColumn],
-      [...emptyColumn],
+      getEmptyColumn(),
+      getEmptyColumn(),
+      getEmptyColumn(),
+      getEmptyColumn(),
+      getEmptyColumn(),
     ];
 
     const game = new GameClass(board);
@@ -99,9 +99,9 @@ describe('checkForVictory', () => {
       [R, Y, _, _, _, _],
       [R, Y, _, _, _, _],
       [R, _, _, _, _, _],
-      [...emptyColumn],
-      [...emptyColumn],
-      [...emptyColumn],
+      getEmptyColumn(),
+      getEmptyColumn(),
+      getEmptyColumn(),
     ];
 
     const game = new GameClass(board);
@@ -120,8 +120,8 @@ describe('checkForVictory', () => {
 
   it('returns Yellow for horizontal yellow win', () => {
     const board: BoardState = [
-      [...emptyColumn],
-      [...emptyColumn],
+      getEmptyColumn(),
+      getEmptyColumn(),
       [Y, R, _, _, _, _],
       [Y, R, _, _, _, _],
       [Y, _, _, _, _, _],
