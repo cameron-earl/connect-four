@@ -59,9 +59,12 @@ describe('equals', () => {
     [5, 3, 5, 4],
     [0, 0, 0, 1],
     [6, 5, 0, 5],
-  ])('should return true for similar objects given colA %i, rowA %i and colB %i, rowB %i', (colA, rowA, colB, rowB) => {
-    const subjectA = new Coord({ col: colA, row: rowA });
-    const subjectB = new Coord({ col: colB, row: rowB });
-    expect(subjectA.equals(subjectB)).toBeFalsy();
-  });
+  ])(
+    'should return false for similar objects given colA %i, rowA %i and colB %i, rowB %i',
+    (colA, rowA, colB, rowB) => {
+      const subjectA = new Coord({ col: colA, row: rowA });
+      const subjectB = new Coord({ col: colB, row: rowB });
+      expect(subjectA.equals(subjectB)).toBeFalsy();
+    }
+  );
 });

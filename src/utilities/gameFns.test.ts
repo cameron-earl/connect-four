@@ -1,6 +1,6 @@
 import Coord from '../models/Coord';
 import { _, emptyColumn, R, Y } from '../models/gameModels';
-import { checkLineForWin, getCoordFromLine, getOtherPlayer } from './gameFns';
+import { checkIdxInLine, checkLineForWin, getCoordFromLine, getOtherPlayer } from './gameFns';
 
 describe('getAllLines', () => {
   it.todo('should return proper lines');
@@ -88,5 +88,35 @@ describe('getOtherPlayer', () => {
 
   it('should return Yellow given Red', () => {
     expect(getOtherPlayer(R)).toBe(Y);
+  });
+});
+
+describe('checkIdxInLine', () => {
+  it.each([
+    [_, 0],
+    [_, 1],
+    [_, 2],
+    [R, 3],
+    [_, 4],
+    [_, 5],
+    [_, 6],
+  ])('should return %p on idx %i for line with first three filled and last four empty', (expected, idx) => {
+    const line = [R, R, R, _, _, _, _];
+    const actual = checkIdxInLine(line, idx, R);
+    expect(actual).toBe(expected);
+  });
+
+  it.each([
+    [_, 0],
+    [_, 1],
+    [_, 2],
+    [_, 3],
+    [_, 4],
+    [_, 5],
+    [R, 6],
+  ])('should return %p on idx %i for problematic line', (expected, idx) => {
+    const line = [_, Y, R, R, R, R, _];
+    const actual = checkIdxInLine(line, idx, R);
+    expect(actual).toBe(expected);
   });
 });

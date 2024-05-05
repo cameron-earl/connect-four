@@ -16,10 +16,12 @@ import {
 import { copy2dArr } from './utils';
 
 export const checkIdxInLine = (line: Line, idx: number, player: PlayerColor): PlayerToken => {
+  if (line[idx] !== Empty) return Empty;
   const lineCopy = [...line];
   lineCopy[idx] = player;
   const result = checkLineForWin(lineCopy);
-  return result ? result.player : Empty;
+
+  return result && result.coordinates.includes(idx) ? result.player : Empty;
 };
 
 export const removeInaccessibleThreats = (threatMap: BoardState): BoardState => {

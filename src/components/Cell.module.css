@@ -6,12 +6,10 @@
   --dark-yellow: #aa1;
   --yellow-warning: -5px 4px 7px 0 var(--yellow) inset;
 
-  --unit-length: min(1vh, 1vw);
+  --unit-length: calc((min(100vh, 100vw) - 1em) / 100);
   --piece-diameter: calc(var(--unit-length) * 11.8);
   --piece-thickness: calc(var(--unit-length) * 0.13);
   --cell-box-shadow: 0px 0px 0px calc(var(--unit-length) * 10) var(--board-color);
-
-  --test-color: lime;
 }
 
 .cellWrapper {
@@ -21,8 +19,6 @@
   box-sizing: border-box;
   position: relative;
   z-index: 20;
-  /* padding: 8px; */
-  /* outline: solid 8px pink; */
 }
 
 .cellWrapper:nth-last-of-type(1) {
@@ -74,6 +70,9 @@
   right: 0;
   bottom: 0;
   z-index:1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .pieceWrapper.winning {
@@ -91,6 +90,9 @@
   text-shadow: 0 0 16px rgba(0,0,0,0.15), 0 0 5px rgba(0, 0, 0, 0.1);
   font-weight: bolder;
   text-indent: calc(-.4 * var(--unit-length));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .piece.Red {
@@ -105,15 +107,18 @@
   border: solid calc(.1 * var(--unit-length)) var(--yellow);
 }
 
-.piece > div {
-  margin-top: max(-.3vw, -.3vh);
+.pieceWrapper:not(.winning) > .piece.new > div.four {
+  animation-name: wobble;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
 }
 
 .pieceWrapper:not(.winning) > .piece.new {
   animation-name: dropIntoPlace;
   animation-duration: .5s;
   animation-timing-function: ease-in;
-  box-shadow: 0 0 var(--unit-length) var(--unit-length) rgb(0, 217, 255) inset;
   text-shadow: 0 0 16px rgba(0,0,0,0.15), 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -166,7 +171,7 @@
       calc(13 * var(--piece-thickness)) 0 0 var(--red),
       calc(14 * var(--piece-thickness)) 0 0 var(--red),
       calc(15 * var(--piece-thickness)) 0 0 var(--red);
-    transform: translateX(calc(.44 * var(--piece-diameter)));
+    transform: translateX(calc(-.08 * var(--piece-diameter)));
     background-color: var(--dark-red);
     animation-timing-function: linear;
   }
@@ -189,7 +194,7 @@
       calc(-13 * var(--piece-thickness)) 0 0 var(--red),
       calc(-14 * var(--piece-thickness)) 0 0 var(--red),
       calc(-15 * var(--piece-thickness)) 0 0 var(--red);
-    transform: translateX(calc(.56 * var(--piece-diameter)));
+    transform: translateX(calc(.08 * var(--piece-diameter)));
     background-color: var(--dark-red);
     animation-timing-function: ease-out;
   }
@@ -290,6 +295,15 @@
   }
   100% {
     z-index: 0;
+  }
+}
+
+@keyframes wobble {
+  0% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(10deg);
   }
 }
 

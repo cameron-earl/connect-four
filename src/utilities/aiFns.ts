@@ -172,7 +172,8 @@ export const moveFns: { [key: string]: aiMoveObj } = {
     moveType: MoveType.act,
     testGameDepth: 0,
     fn: (game, moveOptions) => {
-      const result: number[] = [];
+      // const result: number[] = [];
+
       // TODO: rewatch video to make sure I understand strat
       // get major threat map (?)
       // count empty below major threats.

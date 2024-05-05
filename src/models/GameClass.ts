@@ -190,7 +190,6 @@ class GameClass {
   }
 
   public undo(n: number): void {
-    console.log({ fn: 'undo', moveLog: this._moveLog });
     for (let i = 0; this._moveLog.length && i < n && this.lastCoord; i++) {
       this.board.remove(this.lastCoord.col);
       this._moveLog.pop();

@@ -32,7 +32,7 @@ const Cell = ({ value, isWinningCoord, colIdx, rowIdx, startTime, majorThreat, i
               ${isNew ? styles.new : ''} `}
               style={{ transform: `rotate(${getPieceRotation()}deg)` }}
             >
-              <div>4</div>
+              <div className={styles.four}>4</div>
             </div>
           </div>
         )}
