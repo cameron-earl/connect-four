@@ -58,6 +58,7 @@ A digital version of the classic game, [Connect 4](https://shop.hasbro.com/en-us
 
 ### Bugs
 
+- [ ] Yellow spinning animation not centered
 - [ ] Scrolling down breaks visuals
   - [ ] Put pieces on entirely different layer
     - get rid of position: fixed - it does not allow scrolling!
