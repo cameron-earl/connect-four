@@ -229,7 +229,7 @@
     calc(13 * var(--piece-thickness)) 0 0 var(--yellow),
     calc(14 * var(--piece-thickness)) 0 0 var(--yellow),
     calc(15 * var(--piece-thickness)) 0 0 var(--yellow);
-    transform: translateX(calc(.44 * var(--piece-diameter)));
+    transform: translateX(calc(-.08 * var(--piece-diameter)));
     background-color: var(--dark-yellow);
     animation-timing-function: linear;
   }
@@ -252,7 +252,7 @@
     calc(-13 * var(--piece-thickness)) 0 0 var(--yellow),
     calc(-14 * var(--piece-thickness)) 0 0 var(--yellow),
     calc(-15 * var(--piece-thickness)) 0 0 var(--yellow);
-    transform: translateX(calc(.56 * var(--piece-diameter)));
+    transform: translateX(calc(.08 * var(--piece-diameter)));
     background-color: var(--dark-yellow);
     animation-timing-function: ease-out;
   }

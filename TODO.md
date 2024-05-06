@@ -4,7 +4,7 @@ A digital version of the classic game, [Connect 4](https://shop.hasbro.com/en-us
 
 ### Deploy
 
-- [ ] Publish on pages
+- [x] Publish on pages
 - [x] Upload repo to github
 
 ### Style
@@ -58,10 +58,10 @@ A digital version of the classic game, [Connect 4](https://shop.hasbro.com/en-us
 
 ### Bugs
 
-- [ ] Yellow spinning animation not centered
 - [ ] Scrolling down breaks visuals
   - [ ] Put pieces on entirely different layer
     - get rid of position: fixed - it does not allow scrolling!
     - compressed vertical space very inaccurate - account for button bar?
+- [x] Yellow spinning animation not centered
 - [x] Major threat indicator for A1 given gamelog D1 d2 D3 d4 E1 d5 C1 b1 F1
 - [x] Undo now possible after paste

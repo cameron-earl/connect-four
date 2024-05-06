@@ -1,5 +1,11 @@
 # Connect Four
 
+### [Play here](https://cameron-earl.github.io/connect-four/)
+
+[https://cameron-earl.github.io/connect-four/](https://cameron-earl.github.io/connect-four/)
+
+### About
+
 The goal of this project was to create an enjoyable game like the one we all know and love. Players can either take turns with another human (on the same screen), face off against one of multiple AI difficulties, or set the AI against itself
 
 Eventually, I'd like this project to actively coach people and help them understand how to play better. There are a number of features in development, which you can see by viewing the TODO.md file.
