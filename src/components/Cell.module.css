@@ -306,28 +306,3 @@
     transform: rotate(10deg);
   }
 }
-
-/* @keyframes spin{
-  0%{
-    transform: rotateY(0deg);
-  }
-  100%{
-    transform: rotateY(360deg);
-  }
-}
-
-
-.pieceWrapper.winning > .piece {
-  transform-style: preserve-3d;
-	animation: spin 10s linear infinite;
-}
-
-.pieceWrapper.winning > .piece::before {
-  background-color: red;
-  position: absolute;
-  border-radius: 50%;
-  content: '';
-  height: var(--piece-diameter);
-  width: var(--piece-diameter);
-  transform: translate(calc(0.5 * var(--piece-diameter)), 0, calc(-1 * var(--piece-thickness)));
-} */

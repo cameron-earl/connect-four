@@ -34,3 +34,8 @@ What should count toward a score?
 [Simpler spinning coin animation - implement?](https://codepen.io/keiwo/pen/ZONRgx)
 [Implemented spinning coin animation](https://codepen.io/xaelan/pen/wvwPpLa)
 [Connect 4 Solver tutorial](http://blog.gamesolver.org/)
+
+### Problems solved
+
+- favicon - [https://favicon.io/favicon-converter/](https://favicon.io/favicon-converter/)
+- logo edits - [https://www.online-image-editor.com/](https://www.online-image-editor.com/)

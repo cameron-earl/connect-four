@@ -2,14 +2,10 @@
 
 A digital version of the classic game, [Connect 4](https://shop.hasbro.com/en-us/product/the-classic-game-of-connect-4/80FB5BCA-5056-9047-F5F4-5EB5DF88DAF4)
 
-### Deploy
-
-- [x] Publish on pages
-- [x] Upload repo to github
-
 ### Style
 
-- [ ] margins on the side if narrow enough
+- [x] margins on the side if narrow enough
+- [x] Create and add custom favicon
 - [x] make button bar wrap
 - [x] change new piece style to rotate number
 
@@ -24,10 +20,11 @@ A digital version of the classic game, [Connect 4](https://shop.hasbro.com/en-us
 ### UX and Interface
 
 - [ ] Make fields tabbable
-- [ ] Display for whether or not each player can win
-- [ ] Visualization for all possible future matches
 - [ ] Add toggle for major threat visualization
 - [ ] Somehow indicate to user about hotkey features - hotkey list (hotkey: ?)
+- [ ] Add way to see description of AI persona
+- [ ] Display for whether or not each player can win
+- [ ] Visualization for all possible future matches
 - [ ] Add about, github links, etc
 - [ ] Add minor threat visualization?
 - [ ] Go through accessibility checklist
@@ -58,6 +55,7 @@ A digital version of the classic game, [Connect 4](https://shop.hasbro.com/en-us
 
 ### Bugs
 
+- [ ] AI player 2 sometimes goes even after a p1 ai win
 - [ ] Scrolling down breaks visuals
   - [ ] Put pieces on entirely different layer
     - get rid of position: fixed - it does not allow scrolling!
